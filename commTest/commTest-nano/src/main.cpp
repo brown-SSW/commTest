@@ -13,29 +13,16 @@ void setup()
     mySerial.begin(9600);
     Serial.begin(115200);
     display.begin(0x70);
+    mySerial.setTimeout(0);
 }
 
 void loop()
 {
 
     if (mySerial.available() > 0) {
-        char inChar = mySerial.read();
-        if (inChar == 'f') {
-            display.clear();
-            display.writeDisplay();
-            display.println("your");
-            display.writeDisplay();
-
-            digitalWrite(13, LOW);
-        }
-        if (inChar == 'n') {
-            display.clear();
-            display.writeDisplay();
-            display.println("sus");
-            display.writeDisplay();
-
-            digitalWrite(13, HIGH);
-        }
+        display.println(mySerial.parseFloat(), 4);
+        mySerial.read();
+        display.writeDisplay();
     }
     delay(100);
 }
